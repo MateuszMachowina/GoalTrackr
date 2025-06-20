@@ -1,6 +1,5 @@
-onst goalForm = document.getElementById('goalForm');
+const goalForm = document.getElementById('goalForm');
 const goalList = document.getElementById('goalList');
-const exportBtn = document.getElementById('exportBtn');
 const stepsList = document.getElementById('stepsList');
 const stepInput = document.getElementById('stepInput');
 
@@ -16,10 +15,10 @@ function renderGoals() {
 
     let stepsHtml = '';
     if (goal.steps && goal.steps.length) {
-      stepsHtml = '<ul>' + goal.steps.map(step => <li>${step}</li>).join('') + '</ul>';
+      stepsHtml = '<ul>' + goal.steps.map(step => `<li>${step}</li>`).join('') + '</ul>';
     }
 
-    div.innerHTML = 
+    div.innerHTML = `
       <h3>${goal.title}</h3>
       <p><strong>Target Date:</strong> ${goal.date}</p>
       <p>${goal.description || ''}</p>
@@ -27,7 +26,7 @@ function renderGoals() {
       <p class="status">${goal.status}</p>
       <button onclick="editGoal(${index})">Edit</button>
       <button onclick="deleteGoal(${index})">Delete</button>
-    ;
+    `;
     goalList.appendChild(div);
   });
   localStorage.setItem('goals', JSON.stringify(goals));
@@ -85,56 +84,45 @@ function editGoal(index) {
   editIndex = index;
 }
 
-// Czekaj na pełne załadowanie DOM i jsPDF
-document.addEventListener('DOMContentLoaded', () => {
-  // Ustaw listener na przycisk eksportu
-  exportBtn.addEventListener('click', () => {
-    // Sprawdź czy jsPDF jest załadowany
-    if (!window.jspPDF || !window.jspPDF.jsPDF) {
-      alert('jsPDF library not loaded yet.');
-      return;
+async function exportToPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let y = 20;
+
+  doc.setFontSize(18);
+  doc.text('My Goals', 14, y);
+  y += 10;
+
+  goals.forEach((goal, index) => {
+    doc.setFontSize(14);
+    doc.text(`${index + 1}. ${goal.title}`, 14, y);
+    y += 8;
+    doc.setFontSize(11);
+    doc.text(`Target Date: ${goal.date}`, 14, y);
+    y += 6;
+    doc.text(`Status: ${goal.status}`, 14, y);
+    y += 6;
+    if (goal.description) {
+      const descLines = doc.splitTextToSize(goal.description, 180);
+      doc.text(descLines, 14, y);
+      y += descLines.length * 6;
     }
-
-    const jsPDF = window.jspPDF.jsPDF;
-    const doc = new jsPDF();
-
-    let y = 25;
-    doc.setFontSize(22);
-    doc.text('GoalTrackr — My Goals', 14, 15);
-    doc.setLineWidth(0.5);
-    doc.line(14, 18, 196, 18);
-
-    goals.forEach((goal, index) => {
-      if (y > 270) {
-        doc.addPage();
-        y = 25;
-      }
-      doc.setFontSize(16);
-      doc.text(${index + 1}. ${goal.title}, 14, y);
-      y += 8;
-      doc.setFontSize(12);
-      doc.text(Target Date: ${goal.date}, 14, y);
+    if (goal.steps && goal.steps.length > 0) {
+      doc.text('Steps:', 14, y);
       y += 6;
-      doc.text(Status: ${goal.status}, 14, y);
-      y += 6;
-      if (goal.description) {
-        const descLines = doc.splitTextToSize(goal.description, 180);
-        doc.text(descLines, 14, y);
-        y += descLines.length * 6;
-      }
-      if (goal.steps && goal.steps.length > 0) {
-        doc.text('Steps:', 14, y);
+      goal.steps.forEach((step) => {
+        doc.text(`- ${step}`, 18, y);
         y += 6;
-        goal.steps.forEach((step) => {
-          doc.text(- ${step}, 18, y);
-          y += 6;
-        });
-      }
-      y += 10;
-    });
-
-    doc.save('goals.pdf');
+      });
+    }
+    y += 10;
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
   });
 
-  renderGoals();
-});
+  doc.save('goals.pdf');
+}
+
+renderGoals();
