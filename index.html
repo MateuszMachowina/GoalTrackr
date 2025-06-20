@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Planer Kamieni Milowych</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Planer Kamieni Milowych</h1>
+
+    <form id="goalForm">
+      <input type="text" id="title" placeholder="Tytuł celu" required />
+      <input type="date" id="date" required />
+      <textarea id="description" placeholder="Opis (opcjonalnie)"></textarea>
+      <select id="status">
+        <option value="Planowane">Planowane</option>
+        <option value="W trakcie">W trakcie</option>
+        <option value="Ukończone">Ukończone</option>
+      </select>
+      <button type="submit">Dodaj cel</button>
+    </form>
+
+    <button id="exportBtn">Eksportuj do PDF</button>
+
+    <div id="goalList"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

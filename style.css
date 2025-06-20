@@ -1,0 +1,46 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form, #exportBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input, textarea, select, button {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.goal {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.goal h3 {
+  margin: 0;
+}
+
+.status {
+  font-weight: bold;
+  color: #0077cc;
+}
