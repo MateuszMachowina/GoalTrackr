@@ -85,47 +85,60 @@ function editGoal(index) {
   editIndex = index;
 }
 
-exportBtn.addEventListener('click', () => {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  let y = 25;
+// czekam aż strona i jsPDF będą gotowe
+window.onload = () => {
+  exportBtn.addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-  doc.setFontSize(22);
-  doc.text('GoalTrackr — My Goals', 14, 15);
-  doc.setLineWidth(0.5);
-  doc.line(14, 18, 196, 18);
+    let y = 25;
+    doc.setFontSize(22);
+    doc.text('GoalTrackr — My Goals', 14, 15);
+    doc.setLineWidth(0.5);
+    doc.line(14, 18, 196, 18);
 
-  goals.forEach((goal, index) => {
-    if (y > 270) {
-      doc.addPage();
-      y = 25;
-    }
-    doc.setFontSize(16);
-    doc.text(`${index + 1}. ${goal.title}`, 14, y);
-    y += 8;
-    doc.setFontSize(12);
-    doc.text(`Target Date: ${goal.date}`, 14, y);
-    y += 6;
-    doc.text(`Status: ${goal.status}`, 14, y);
-    y += 6;
-    if (goal.description) {
-      const descLines = doc.splitTextToSize(goal.description, 180);
-      doc.text(descLines, 14, y);
-      y += descLines.length * 6;
-    }
-    if (goal.steps && goal.steps.length > 0) {
-      doc.text('Steps:', 14, y);
+    goals.forEach((goal, index) => {
+      if (y > 270) {
+        doc.addPage();
+        y = 25;
+      }
+      doc.setFontSize(16);
+      doc.text(`${index + 1}. ${goal.title}`, 14, y);
+      y += 8;
+      doc.setFontSize(12);
+      doc.text(`Target Date: ${goal.date}`, 14, y);
       y += 6;
-      goal.steps.forEach((step) => {
-        doc.text(`- ${step}`, 18, y);
+      doc.text(`Status: ${goal.status}`, 14, y);
+      y += 6;
+      if (goal.description) {
+        const descLines = doc.splitTextToSize(goal.description, 180);
+        doc.text(descLines, 14, y);
+        y += descLines.length * 6;
+      }
+      if (goal.steps && goal.steps.length > 0) {
+        doc.text('Steps:', 14, y);
         y += 6;
-      });
-    }
-    y += 10;
+        goal.steps.forEach((step) => {
+          doc.text(`- ${step}`, 18, y);
+          y += 6;
+        });
+      }
+      y += 10;
+    });
+
+    doc.save('goals.pdf');
   });
-
-  doc.save('goals.pdf');
-});
-
+};
 
 renderGoals();
+
+function addStep() {
+  const step = stepInput.value.trim();
+  if (step !== '') {
+    tempSteps.push(step);
+    const li = document.createElement('li');
+    li.textContent = step;
+    stepsList.appendChild(li);
+    stepInput.value = '';
+  }
+}
