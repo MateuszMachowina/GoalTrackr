@@ -13,9 +13,13 @@
       <input type="text" id="title" placeholder="Goal Title" required>
       <input type="date" id="date" required>
       <textarea id="description" placeholder="Goal Description"></textarea>
-      <input type="text" id="stepInput" placeholder="Add a Step">
-      <button type="button" onclick="addStep()">Add Step</button>
-      <ul id="stepsList"></ul>
+    
+      <div class="step-section">
+        <input type="text" id="stepInput" placeholder="Add a Step">
+        <button type="button" onclick="addStep()">Add Step</button>
+        <ul id="stepsList"></ul>
+      </div>
+    
       <select id="status">
         <option value="Planned">Planned</option>
         <option value="In Progress">In Progress</option>
@@ -23,7 +27,7 @@
       </select>
       <button type="submit">Accept</button>
     </form>
-    
+
     <button id="exportBtn">Export to PDF</button>
     <div id="goalList"></div>
   </div>
