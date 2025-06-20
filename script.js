@@ -1,5 +1,6 @@
 const goalForm = document.getElementById('goalForm');
 const goalList = document.getElementById('goalList');
+const exportBtn = document.getElementById('exportBtn');
 const stepsList = document.getElementById('stepsList');
 const stepInput = document.getElementById('stepInput');
 
@@ -84,45 +85,15 @@ function editGoal(index) {
   editIndex = index;
 }
 
-async function exportToPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  let y = 20;
-
-  doc.setFontSize(18);
-  doc.text('My Goals', 14, y);
-  y += 10;
-
-  goals.forEach((goal, index) => {
-    doc.setFontSize(14);
-    doc.text(`${index + 1}. ${goal.title}`, 14, y);
-    y += 8;
-    doc.setFontSize(11);
-    doc.text(`Target Date: ${goal.date}`, 14, y);
-    y += 6;
-    doc.text(`Status: ${goal.status}`, 14, y);
-    y += 6;
-    if (goal.description) {
-      const descLines = doc.splitTextToSize(goal.description, 180);
-      doc.text(descLines, 14, y);
-      y += descLines.length * 6;
-    }
-    if (goal.steps && goal.steps.length > 0) {
-      doc.text('Steps:', 14, y);
-      y += 6;
-      goal.steps.forEach((step) => {
-        doc.text(`- ${step}`, 18, y);
-        y += 6;
-      });
-    }
-    y += 10;
-    if (y > 270) {
-      doc.addPage();
-      y = 20;
-    }
-  });
-
-  doc.save('goals.pdf');
-}
+exportBtn.addEventListener('click', () => {
+  const opt = {
+    margin: 0.5,
+    filename: 'goals.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+  html2pdf().from(goalList).set(opt).save();
+});
 
 renderGoals();
