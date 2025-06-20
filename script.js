@@ -37,11 +37,33 @@ function addStep() {
   const step = stepInput.value.trim();
   if (step !== '') {
     tempSteps.push(step);
-    const li = document.createElement('li');
-    li.textContent = step;
-    stepsList.appendChild(li);
+    renderStepsList();
     stepInput.value = '';
   }
+}
+
+function renderStepsList() {
+  stepsList.innerHTML = '';
+  tempSteps.forEach((step, index) => {
+    const li = document.createElement('li');
+    li.textContent = step;
+
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = '❌';
+    removeBtn.style.marginLeft = '10px';
+    removeBtn.style.background = '#f44336';
+    removeBtn.style.color = '#fff';
+    removeBtn.style.border = 'none';
+    removeBtn.style.borderRadius = '3px';
+    removeBtn.style.cursor = 'pointer';
+    removeBtn.onclick = () => {
+      tempSteps.splice(index, 1);
+      renderStepsList();
+    };
+
+    li.appendChild(removeBtn);
+    stepsList.appendChild(li);
+  });
 }
 
 goalForm.addEventListener('submit', (e) => {
@@ -76,12 +98,7 @@ function editGoal(index) {
   document.getElementById('description').value = goal.description;
   document.getElementById('status').value = goal.status;
   tempSteps = [...goal.steps];
-  stepsList.innerHTML = '';
-  tempSteps.forEach(step => {
-    const li = document.createElement('li');
-    li.textContent = step;
-    stepsList.appendChild(li);
-  });
+  renderStepsList();
   editIndex = index;
 }
 
