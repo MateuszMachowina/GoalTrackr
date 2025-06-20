@@ -88,7 +88,7 @@ function editGoal(index) {
 // czekam aż strona i jsPDF będą gotowe
 window.onload = () => {
   exportBtn.addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
+    const jsPDF = window.jspPDF.jsPDF;  // <-- tutaj poprawka!
     const doc = new jsPDF();
 
     let y = 25;
