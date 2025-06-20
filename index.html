@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GoalTrackr</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>GoalTrackr</h1>
     <form id="goalForm">
-      <input type="text" id="title" placeholder="Goal Title" required />
-      <input type="date" id="date" required />
+      <input type="text" id="title" placeholder="Goal Title" required>
+      <input type="date" id="date" required>
       <textarea id="description" placeholder="Goal Description"></textarea>
-      <input type="text" id="stepInput" placeholder="Add a Step" />
+      <input type="text" id="stepInput" placeholder="Add a Step">
       <button type="button" onclick="addStep()">Add Step</button>
       <ul id="stepsList"></ul>
       <select id="status">
@@ -24,10 +25,10 @@
       <button type="submit">Accept</button>
     </form>
 
-    <button id="exportBtn">Export to PDF</button>
+    <button id="exportBtn" onclick="exportToPDF()">Export to PDF</button>
     <div id="goalList"></div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script src="script.js"></script>
 </body>
 </html>
