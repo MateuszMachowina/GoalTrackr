@@ -50,12 +50,7 @@ function renderStepsList() {
 
     const removeBtn = document.createElement('button');
     removeBtn.textContent = '❌';
-    removeBtn.style.marginLeft = '10px';
-    removeBtn.style.background = '#f44336';
-    removeBtn.style.color = '#fff';
-    removeBtn.style.border = 'none';
-    removeBtn.style.borderRadius = '3px';
-    removeBtn.style.cursor = 'pointer';
+    removeBtn.className = 'remove-step'; // dla stylów CSS
     removeBtn.onclick = () => {
       tempSteps.splice(index, 1);
       renderStepsList();
