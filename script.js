@@ -85,10 +85,17 @@ function editGoal(index) {
   editIndex = index;
 }
 
-// czekam aż strona i jsPDF będą gotowe
-window.onload = () => {
+// Czekaj na pełne załadowanie DOM i jsPDF
+document.addEventListener('DOMContentLoaded', () => {
+  // Ustaw listener na przycisk eksportu
   exportBtn.addEventListener('click', () => {
-    const jsPDF = window.jspPDF.jsPDF;  // <-- tutaj poprawka!
+    // Sprawdź czy jsPDF jest załadowany
+    if (!window.jspPDF || !window.jspPDF.jsPDF) {
+      alert('jsPDF library not loaded yet.');
+      return;
+    }
+
+    const jsPDF = window.jspPDF.jsPDF;
     const doc = new jsPDF();
 
     let y = 25;
@@ -128,17 +135,6 @@ window.onload = () => {
 
     doc.save('goals.pdf');
   });
-};
 
-renderGoals();
-
-function addStep() {
-  const step = stepInput.value.trim();
-  if (step !== '') {
-    tempSteps.push(step);
-    const li = document.createElement('li');
-    li.textContent = step;
-    stepsList.appendChild(li);
-    stepInput.value = '';
-  }
-}
+  renderGoals();
+});
