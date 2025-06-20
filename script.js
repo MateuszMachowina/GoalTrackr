@@ -15,10 +15,10 @@ function renderGoals() {
 
     let stepsHtml = '';
     if (goal.steps && goal.steps.length) {
-      stepsHtml = '<ul>' + goal.steps.map(step => `<li>${step}</li>`).join('') + '</ul>';
+      stepsHtml = '<ul>' + goal.steps.map(step => <li>${step}</li>).join('') + '</ul>';
     }
 
-    div.innerHTML = `
+    div.innerHTML = 
       <h3>${goal.title}</h3>
       <p><strong>Target Date:</strong> ${goal.date}</p>
       <p>${goal.description || ''}</p>
@@ -26,7 +26,7 @@ function renderGoals() {
       <p class="status">${goal.status}</p>
       <button onclick="editGoal(${index})">Edit</button>
       <button onclick="deleteGoal(${index})">Delete</button>
-    `;
+    ;
     goalList.appendChild(div);
   });
   localStorage.setItem('goals', JSON.stringify(goals));
@@ -95,12 +95,12 @@ async function exportToPDF() {
 
   goals.forEach((goal, index) => {
     doc.setFontSize(14);
-    doc.text(`${index + 1}. ${goal.title}`, 14, y);
+    doc.text(${index + 1}. ${goal.title}, 14, y);
     y += 8;
     doc.setFontSize(11);
-    doc.text(`Target Date: ${goal.date}`, 14, y);
+    doc.text(Target Date: ${goal.date}, 14, y);
     y += 6;
-    doc.text(`Status: ${goal.status}`, 14, y);
+    doc.text(Status: ${goal.status}, 14, y);
     y += 6;
     if (goal.description) {
       const descLines = doc.splitTextToSize(goal.description, 180);
@@ -111,7 +111,7 @@ async function exportToPDF() {
       doc.text('Steps:', 14, y);
       y += 6;
       goal.steps.forEach((step) => {
-        doc.text(`- ${step}`, 18, y);
+        doc.text(- ${step}, 18, y);
         y += 6;
       });
     }
