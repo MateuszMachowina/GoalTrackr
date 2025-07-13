@@ -32,6 +32,8 @@ https://mateuszmachowina.github.io/GoalTrackr/
 ├── style.css          # Styling and responsive layout
 ├── script.js          # App logic, goal handling, export feature
 ├── README.md          # You're here!
+├── example.pdf        # Plan printed with the GoalTrckr
+├── preview.png        # Screenshot of an example
 ```
 
 ## ✨ Future Improvements
