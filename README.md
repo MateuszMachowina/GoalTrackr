@@ -2,7 +2,9 @@
 
 **GoalTrackr** is a simple, stylish goal tracking web app that helps you stay organized and motivated. Create goals, add steps, track statuses and export your plans to PDF.
 
-![screenshot](preview.png)
+## 🔤 Live Demo
+
+https://mateuszmachowina.github.io/GoalTrackr/
 
 ## 🚀 Features
 
@@ -14,9 +16,7 @@
 * **Export your goals to PDF** with one click using `html2pdf.js`
 * Fully responsive and dark-themed design
 
-## 🔤 Live Demo
-
-https://mateuszmachowina.github.io/GoalTrackr/
+![screenshot](preview.png)
 
 ## 🛠️ Technologies Used
 
